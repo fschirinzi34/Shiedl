@@ -10,7 +10,7 @@ from transformers import AdamW
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, roc_curve, auc
 
 class ClinicalT5_ModelTrainer:
-    """ Trainer per ClinicalT5-base usando T5ForSequenceClassification """
+    """ Trainer for ClinicalT5-base using T5ForSequenceClassification """
 
     def __init__(self, model_name, save_folder, device, weight_model_path=None, num_labels=2, num_epochs=3, lr=5e-5, loss_fn=None):
         self.model_name = model_name
@@ -21,12 +21,12 @@ class ClinicalT5_ModelTrainer:
         self.lr = lr
         self.num_labels = num_labels
         
-        # Inizializza il tokenizer per ClinicalT5-base
+        # Initialize tokenizer for ClinicalT5-base
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         
-        # Inizializza il modello ClinicalT5 per sequence classification
-        # Usa T5ForSequenceClassification con il numero di label specificato
-        # Aggiunto from_flax=True per caricare dai pesi Flax
+        # Initialize model ClinicalT5 for sequence classification
+        # Use T5ForSequenceClassification with the specifiet labels number
+        # Added from_flax=True in order to load Flax weights
         self.model = T5ForSequenceClassification.from_pretrained(
             model_name,
             num_labels=num_labels
@@ -35,64 +35,63 @@ class ClinicalT5_ModelTrainer:
             state_dict = torch.load(weight_model_path, map_location=self.device)
             self.model.load_state_dict(state_dict)
         else:
-            # Inizializza l'optimizer
+            # Initialize the optimizer
             self.optim = torch.optim.Adam(self.model.parameters(), lr=lr)
 
 
         self.model.to(device)
         
-        # Inizializza le liste per tracciare le metriche
+        # Initialize list for metrics
         self.train_losses = []
         self.valid_accuracies = []
         
-        # Imposta la funzione di loss di default se non fornita
+        # Setting default loss function if not provided
         self.loss_fn = loss_fn if loss_fn is not None else nn.CrossEntropyLoss()
         
-        # Crea directory per salvare i plot
+        # Make directory for saving plots
         self.plots_dir = save_folder
         self._create_plots_directory()
 
     def _create_plots_directory(self):
-        """Crea directory per salvare i plot se non esiste."""
+        """Make directory for saving plots if it doesn't exist"""
         if not os.path.exists(self.plots_dir):
             os.makedirs(self.plots_dir)
             print(f"Created directory: {self.plots_dir}")
 
     def _get_timestamp(self):
-        """Ottieni timestamp corrente per nominare i file."""
+        """Return current timestamp for naming files"""
         return datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def train(self, train_loader, valid_loader=None):
-        """ Addestra il modello ClinicalT5 sui dati di training forniti """
+        """ Train the model on provided training data"""
 
         start_time = time.time()
         print(f"Starting training for {self.num_epochs} epochs...")
         
         for epoch in range(self.num_epochs):
-            # Imposta il modello in modalità training
+            # Set model in training mode
             self.model.train()
             batch_losses = []
             start_time_for = time.time()
             
             for batch_idx, batch in enumerate(train_loader):
                 
-                # Sposta i dati del batch sul device
+                # Move batch data on device
                 input_ids = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 labels = batch['labels'].to(self.device)
 
-                # Forward pass - ora usa direttamente T5ForSequenceClassification
+                # Forward pass - now use directly T5ForSequenceClassification
                 outputs = self.model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
                 loss = outputs.loss
 
-                # Backward pass e ottimizzazione
+                # Backward pass and optimization
                 self.optim.zero_grad()
                 loss.backward()
                 self.optim.step()
 
                 batch_losses.append(loss.item())
 
-                # Stampa progresso ogni 50 batch
                 if not batch_idx % 50:
                     end_time = time.time()
                     iter_time = end_time - start_time_for
@@ -101,11 +100,10 @@ class ClinicalT5_ModelTrainer:
                         f'Loss: {loss:.4f} | '
                         f'Time_batch: {iter_time:.4f} s | ')
 
-            # Calcola la loss media per l'epoca
             epoch_loss = sum(batch_losses) / len(batch_losses)
             self.train_losses.append(epoch_loss)
 
-            # Calcola l'accuracy di validazione se il loader di validazione è fornito
+            # Compute the validation accuracy if validation loader has been provided
             if valid_loader is not None:
                 valid_accuracy = self.compute_accuracy(valid_loader)
                 self.valid_accuracies.append(valid_accuracy)
@@ -113,7 +111,7 @@ class ClinicalT5_ModelTrainer:
                     f'Training Loss: {epoch_loss:.4f} | '
                     f'Validation Accuracy: {valid_accuracy:.2f}%')
             else:
-                # Per scenari di k-fold cross-validation
+                # for k-fold cross-validation scenarios
                 print(f'Epoch: {epoch+1:04d}/{self.num_epochs:04d} | '
                     f'Training Loss: {epoch_loss:.4f} | '
                     f'No validation step in this epoch.')
@@ -123,23 +121,20 @@ class ClinicalT5_ModelTrainer:
         print(f'Total Training Time: {(time.time() - start_time)/60:.2f} min')
 
     def compute_accuracy(self, data_loader):
-        """ Calcola l'accuracy sul dataset fornito """
+        """ Compute accuracy on the provided dataset"""
 
         self.model.eval()
         correct_pred, num_examples = 0, 0
         
         with torch.no_grad():
             for batch in data_loader:
-                # Sposta i dati del batch sul device
                 input_ids = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 labels = batch['labels'].to(self.device)
 
-                # Forward pass
                 outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
                 _, predicted_labels = torch.max(outputs.logits, 1)
 
-                # Aggiorna i contatori
                 num_examples += labels.size(0)
                 correct_pred += (predicted_labels == labels).sum()
         
@@ -147,7 +142,7 @@ class ClinicalT5_ModelTrainer:
         return accuracy.item()
 
     def plot_roc_curve(self, data_loader, save_plot=True, filename=None):
-        """ Plotta e opzionalmente salva la curva ROC per classificazione binaria """
+        """ Plots and saves the ROC-Curve for binary classification"""
 
         print("Generating ROC curve...")
         self.model.eval()
@@ -156,36 +151,30 @@ class ClinicalT5_ModelTrainer:
 
         with torch.no_grad(): 
             for batch in data_loader: 
-                # Sposta i dati del batch sul device
                 input_ids = batch['input_ids'].to(self.device) 
                 attention_mask = batch['attention_mask'].to(self.device) 
                 labels = batch['labels'].to(self.device) 
 
-                # Forward pass
                 outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
 
-                # Raccogli le label vere e le probabilità predette
                 y_true.extend(labels.cpu().numpy()) 
                 y_scores.extend(outputs.logits.softmax(dim=1)[:, 1].cpu().numpy())
 
-        # Calcola i componenti della curva ROC
         fpr, tpr, _ = roc_curve(y_true, y_scores) 
         roc_auc = auc(fpr, tpr)
 
-        # Crea il plot della curva ROC
         plt.figure(figsize=(10, 7)) 
         plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.5f})')
         plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', label='Random Classifier')
         plt.fill_between(fpr, tpr, color='darkorange', alpha=0.3)
 
-        # Personalizza il plot
         plt.xlabel('False Positive Rate (FPR)')
         plt.ylabel('True Positive Rate (TPR)')
         plt.title('Receiver Operating Characteristic (ROC) Curve')
         plt.legend(loc='lower right')
         plt.grid(True, alpha=0.3)
         
-        # Salva il plot se richiesto
+        # Save plot if required
         if save_plot:
             if filename is None:
                 filename = f"roc_curve_{self._get_timestamp()}.png"
@@ -196,7 +185,7 @@ class ClinicalT5_ModelTrainer:
         plt.show()
 
     def save_model(self, model_path, optimizer_path):
-        """ Salva i state dictionary del modello e dell'optimizer """
+        """ Saves the state dictionaries of model and optimizer"""
 
         torch.save(self.model.state_dict(), model_path)
         torch.save(self.optim.state_dict(), optimizer_path)
@@ -204,7 +193,7 @@ class ClinicalT5_ModelTrainer:
         print(f"Optimizer saved to: {optimizer_path}")
 
     def evaluate(self, test_loader, save_plot=True, filename=None):
-        """ Valutazione completa del modello sui dati di test """
+        """ Complete evaluation of model on test dataset"""
 
         print("Starting model evaluation...")
         self.model.eval()
@@ -215,55 +204,45 @@ class ClinicalT5_ModelTrainer:
 
         with torch.no_grad():
             for batch_index, batch in enumerate(test_loader):
-                # Sposta i dati del batch sul device
                 inputs = batch['input_ids'].to(self.device)
                 attention_mask = batch['attention_mask'].to(self.device)
                 labels = batch['labels'].to(self.device)
 
-                # Forward pass
                 outputs = self.model(input_ids=inputs, attention_mask=attention_mask)
                 logits = outputs.logits
 
-                # Calcola la loss
                 loss = self.loss_fn(logits, labels)
                 total_loss += loss.item()
 
-                # Ottieni predizioni e punteggi di probabilità
+                # Obtain predictions and probability scores
                 _, preds = torch.max(logits, 1)
-                scores = torch.softmax(logits, dim=1)[:, 1] # Probabilità per classe positiva
+                scores = torch.softmax(logits, dim=1)[:, 1] # Probabilities for positive class
 
-                # Raccogli tutte le predizioni e label
                 all_preds.extend(preds.cpu().numpy())
                 all_labels.extend(labels.cpu().numpy())
                 all_scores.extend(scores.cpu().numpy())
 
-        # Calcola le metriche di valutazione
         accuracy = accuracy_score(all_labels, all_preds)
         precision = precision_score(all_labels, all_preds, average='weighted')
         recall = recall_score(all_labels, all_preds, average='weighted')
         f1 = f1_score(all_labels, all_preds, average='weighted')
 
-        # Calcola AUC-ROC solo se sono presenti più classi
         if len(set(all_labels)) > 1:
             auc_roc = roc_auc_score(all_labels, all_scores)
 
-            # Calcola i componenti della curva ROC
             fpr, tpr, _ = roc_curve(all_labels, all_scores)
 
-            # Crea e visualizza la curva ROC
             plt.figure(figsize=(10, 7))
             plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {auc_roc:.5f})')
             plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--', label='Random Classifier')
             plt.fill_between(fpr, tpr, color='purple', alpha=0.2)
             
-            # Personalizza il plot
             plt.xlabel('False Positive Rate (FPR)')
             plt.ylabel('True Positive Rate (TPR)')
             plt.title('Receiver Operating Characteristic (ROC) Curve - Test Set')
             plt.legend(loc='lower right')
             plt.grid(True, alpha=0.3)
             
-            # Salva il plot se richiesto
             if save_plot:
                 if filename is None:
                     filename = f"test_roc_curve_{self._get_timestamp()}.png"
@@ -277,7 +256,7 @@ class ClinicalT5_ModelTrainer:
 
         avg_loss = total_loss / len(test_loader)
 
-        # Stampa i risultati della valutazione
+        # Print evaluation results
         print("\n" + "="*50)
         print("EVALUATION RESULTS")
         print("="*50)
@@ -302,23 +281,21 @@ class ClinicalT5_ModelTrainer:
         }
 
     def load_model(self, model_path, optimizer_path):
-        """ Carica i state dictionary del modello e dell'optimizer """
+        """ Upload the state dictionaries of model and optimizer """
 
-        # Carica lo state dict del modello
         self.model.load_state_dict(torch.load(model_path))
         self.model.to(self.device)
         print(f"Model loaded from: {model_path}")
 
-        # Inizializza l'optimizer con i parametri correnti
+        # Initializing optimizer with current parameters
         self.optim = AdamW(self.model.parameters(), lr=self.lr, correct_bias=True)
         
         try:
-            # Carica lo state dict dell'optimizer
             optimizer_state_dict = torch.load(optimizer_path, map_location=self.device)
 
-            # Controlla se lo state dict ha le chiavi richieste
+            # Check if state dict has requested keys
             if 'state' in optimizer_state_dict and 'param_groups' in optimizer_state_dict:
-                # Gestisci la chiave 'correct_bias' mancante (problema di compatibilità)
+                # Manage unavailable keys 'correct_bias'
                 if 'correct_bias' not in optimizer_state_dict['param_groups'][0]:
                     print("Warning: 'correct_bias' key missing in optimizer state dict.")
                 
@@ -333,14 +310,14 @@ class ClinicalT5_ModelTrainer:
             self.optim = AdamW(self.model.parameters(), lr=self.lr, correct_bias=True)
 
     def plot_metrics(self, save_plot=True, filename=None):
-        """ Plotta le metriche di training (loss e accuracy di validazione) """
+        """ Plot training metrics (validation loss e accuracy) """
         if not self.train_losses:
             print("No training data to plot. Train the model first.")
             return
             
         plt.figure(figsize=(15, 6))
         
-        # Plotta la training loss
+        # Plot training loss
         plt.subplot(1, 2, 1)
         plt.plot(range(1, len(self.train_losses) + 1), self.train_losses, 
                 'b-', marker='o', linewidth=2, markersize=6, label='Training Loss')
@@ -350,7 +327,7 @@ class ClinicalT5_ModelTrainer:
         plt.legend(fontsize=10)
         plt.grid(True, alpha=0.3)
         
-        # Plotta l'accuracy di validazione se disponibile
+        # Plot validation accuracy if available
         if self.valid_accuracies:
             plt.subplot(1, 2, 2)
             plt.plot(range(1, len(self.valid_accuracies) + 1), self.valid_accuracies, 
@@ -361,7 +338,6 @@ class ClinicalT5_ModelTrainer:
             plt.legend(fontsize=10)
             plt.grid(True, alpha=0.3)
         else:
-            # Se non ci sono dati di validazione, mostra un messaggio
             plt.subplot(1, 2, 2)
             plt.text(0.5, 0.5, 'No Validation Data Available', 
                     horizontalalignment='center', verticalalignment='center',
@@ -370,7 +346,6 @@ class ClinicalT5_ModelTrainer:
 
         plt.tight_layout()
         
-        # Salva il plot se richiesto
         if save_plot:
             if filename is None:
                 filename = f"training_metrics_{self._get_timestamp()}.png"
@@ -381,7 +356,7 @@ class ClinicalT5_ModelTrainer:
         plt.show()
 
     def get_training_summary(self):
-        """ Ottieni un riassunto del processo di training """
+        """ Returns summary of training process"""
         if not self.train_losses:
             return {"message": "No training data available"}
             
@@ -401,16 +376,15 @@ class ClinicalT5_ModelTrainer:
             
         return summary
 
-# Esempio di utilizzo diretto come nel tuo esempio
 def test_clinical_t5_classification():
-    """Test di esempio per verificare che il modello funzioni correttamente"""
+    """ Example test to verify that the model works correctly """
     
-    # Inizializza tokenizer e modello
+    # Initialize tokenizer and model
     model_name = "hossboll/clinical-t5"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = T5ForSequenceClassification.from_pretrained(model_name, num_labels=2)
     
-    # Test con un esempio di testo medico
+    # Test with an example of medical text
     text = "Patient presents with chest pain and shortness of breath"
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
     
@@ -421,14 +395,12 @@ def test_clinical_t5_classification():
     print(f"Predicted class: {predicted_class_id}")
     print(f"Logits: {logits}")
     
-    # Test con label per calcolare la loss
-    labels = torch.tensor([1])  # Esempio di label
+    labels = torch.tensor([1])
     loss = model(**inputs, labels=labels).loss
     print(f"Loss: {round(loss.item(), 4)}")
     
     return model, tokenizer
 
 if __name__ == "__main__":
-    # Test del modello
     print("Testing ClinicalT5-base for sequence classification...")
     test_clinical_t5_classification()

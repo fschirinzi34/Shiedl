@@ -8,9 +8,10 @@ import ast
 
 
 # /-------------------------------------------- make_dataset_coherent -------------------------------------------------/
-# Funzione che prende in input il dataset csv e verifica se nel testo ci sono dei placeholders (tra i nostri) non ancora sostituiti.
-# In caso affermativo sostituisce il placeholders con uno dei possibili valori che gli abbiamo passato in "options"
-# Per tutti i placeholders le sostituzioni sono fatte in modo randomico.
+# Function that takes the CSV dataset as input and checks whether there are any placeholders (among ours) in the text that 
+# have not yet been replaced.
+# If so, it replaces the placeholders with one of the possible values ​​we passed to it in "options" for all placeholders, 
+# the replacements are done randomly.
 
 def make_dataset_coherent(filename: str, outputfile: str):
     df = pd.read_csv(filename)
@@ -203,10 +204,10 @@ def delete_rows_starting_here_is(input_path: str, output_path: str):
 
 
 # /------------------------------------------- delete_rows_by_regex ---------------------------------------------------/
-# Controlliamo se le righe contengono dei placeholders tra <> o tra [] nel TESTO, in quel caso eliminiamo la riga perchè
-# il modello ha inserito quei placeholders per errore.
-# Inoltre facciamo un controllo riga per riga vedendo se il testo inizia per "I cannot", in quel caso eliminiamo la riga
-# perchè il modello non è riusciuto a generare il testo seguendo le istruzioni che gli abbiamo fornito.
+# We check if the lines contain placeholders between <> or [] in the TEXT, in that case we delete the line because the 
+# template inserted those placeholders by mistake.
+# We also do a line-by-line check to see if the text begins with "I cannot." If so, we delete the line because the model
+# was unable to generate the text following the instructions we provided.
 
 def delete_rows_by_regex(input_path: str, output_path: str):
     start_re = re.compile(r'^I cannot')
@@ -237,13 +238,13 @@ def delete_rows_by_regex(input_path: str, output_path: str):
 
 
 # /--------------------------------------------- clean_dictionary -----------------------------------------------------/
-# Questa funzione prende in input il file csv e fa un controllo nella colonna "substitutions_dictionary" per vedere se
-# ci sono dei placeholders che il modello ha indicato in questo modo <qualcosa) sostituendo la ")" con ">".
-# In più effettua una verifica per verificare se nella colonna "substitutions_dictionary" sono presenti dei placeholders
-# diversi ripetto ai nostri (specificati nella variabile "ALLOWED"). In quel caso elimina la riga perche il modello
-# ha inserito quei placeholder per errore.
-# Effettua anche il controllo per verificare se nel dizionario sono presenti dei valori "N/A", in quel caso il modello
-# ha commesso un errore ed eliminiamo la riga.
+# This function takes the csv file as input and checks the "substitutions_dictionary" column to see if there are any 
+# placeholders that the template has indicated like this <something) replacing the ")" with ">".
+# Additionally, it checks to see if the "substitutions_dictionary" column contains placeholders other than ours 
+# (specified in the "ALLOWED" variable). If so, it deletes the row because the template inserted those placeholders 
+# by mistake.
+# It also checks to see if there are any "N/A" values ​​in the dictionary, in which case the model has made an error and 
+# we delete the row.
 
 def clean_dictionary(input_csv: str, output_csv: str):
     import csv
@@ -322,9 +323,9 @@ def clean_dictionary(input_csv: str, output_csv: str):
 
 
 #/----------------------------------------------- fix_maiuscole_func ------------------------------------------------------/
-# Questa funzione prende in input una stringa di testo e lo corregge nel seguente modo: se una lettera maiuscola viene trovata, la funzione verifica
-# se si trova all'inizio del testo, si trova dopo un punto (.), un punto esclamativo (!) o un punto interrogativo (?)
-# In tutti gli altri casi, la maiuscola viene convertita in minuscolo.
+# This function takes a text string as input and corrects it as follows: if an uppercase letter is found, the function 
+# checks whether it is at the beginning of the text, after a period (.), an exclamation point (!), or a question mark (?).
+# In all other cases, uppercase is converted to lowercase.
 def fix_maiuscole_func(text):
     if not text:
         return text

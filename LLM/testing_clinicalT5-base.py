@@ -4,7 +4,6 @@ import os
 from datetime import datetime
 from custom_libs_clinical_t5_base.data_handler import DataHandler
 from custom_libs_clinical_t5_base.pii_data_loader import PIIDataLoader
-# Corretto l'import
 from custom_libs_clinical_t5_base.ClinicalT5_ModelTrainer import ClinicalT5_ModelTrainer
 
 
