@@ -1,0 +1,44 @@
+Test del nostro algoritmo (LLM+NER), trainato interamente sul nostro dataset, sulle 1.000 righe del dataset trovato:
+
+=============================================================================================
+					LLM
+=============================================================================================
+
+Precision: 1.00000
+Recall: 1.00000
+F1-Score: 1.00000
+
+
+
+=============================================================================================
+					NER
+=============================================================================================
+
+Media generale del modello:
+  Precision: 0.4748
+  Recall:    0.0482
+  F1-score:  0.0821
+
+
+
+Risultati per entità:
+ 
+B-CLIN_COND:
+  Precision: 0.4425
+  Recall:    0.1183
+  F1-score:  0.1867
+ 
+I-CLIN_COND:
+  Precision: 0.6330
+  Recall:    0.0384
+  F1-score:  0.0724
+ 
+B-MED_REP:
+  Precision: 0.4544
+  Recall:    0.0229
+  F1-score:  0.0435
+ 
+I-MED_REP:
+  Precision: 0.3695
+  Recall:    0.0134
+  F1-score:  0.0258
