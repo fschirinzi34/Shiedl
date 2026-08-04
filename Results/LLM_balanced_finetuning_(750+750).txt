@@ -1,0 +1,465 @@
+----- Test su dataset creato da noi -----
+Numero di esecuzioni per questo dataset: 30
+
+Metriche globali:
+  Precision: media = 0.98222817079652, varianza = 0.00015266771419675
+  Recall: media = 0.98183333333333, varianza = 0.00016807471264357
+  F1_score: media = 0.98183564817452, varianza = 0.00016801546734145
+
+----- Test su dataset trovato -----
+Numero di esecuzioni per questo dataset: 30
+
+Metriche globali:
+  Precision: media = 1.0000, varianza = 0.000000
+  Recall: media = 1.0000, varianza = 0.000000
+  F1_score: media = 1.0000, varianza = 0.000000
+
+============================================================
+RUN 1 con seed: 1785762275
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.97015877801226
+  Recall: 0.97
+  F1_score: 0.9699819349658771
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 2 con seed: 1785762431
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9950476190476192
+  Recall: 0.995
+  F1_score: 0.9949988727172524
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 3 con seed: 1785762555
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9654819337403664
+  Recall: 0.965
+  F1_score: 0.9650236729376988
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 4 con seed: 1785762692
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9754967884383784
+  Recall: 0.975
+  F1_score: 0.9750282840980514
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 5 con seed: 1785762819
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9950490196078432
+  Recall: 0.995
+  F1_score: 0.994999624915606
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 6 con seed: 1785762953
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 7 con seed: 1785763082
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9807766990291262
+  Recall: 0.98
+  F1_score: 0.97999599959996
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 8 con seed: 1785763212
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 9 con seed: 1785763344
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.990222222222222
+  Recall: 0.99
+  F1_score: 0.9900111347302358
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 10 con seed: 1785763471
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9854285714285714
+  Recall: 0.985
+  F1_score: 0.984992115341293
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 11 con seed: 1785763605
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.96
+  Recall: 0.96
+  F1_score: 0.96
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 12 con seed: 1785763732
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.98
+  Recall: 0.98
+  F1_score: 0.98
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 13 con seed: 1785763863
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9850576441102756
+  Recall: 0.985
+  F1_score: 0.9850041375159858
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 14 con seed: 1785763993
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9654086538461538
+  Recall: 0.965
+  F1_score: 0.9649868667917448
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 15 con seed: 1785764125
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9507619047619048
+  Recall: 0.945
+  F1_score: 0.9450151253781346
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 16 con seed: 1785764254
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9850560897435898
+  Recall: 0.985
+  F1_score: 0.9850033818482428
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 17 con seed: 1785764381
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9901818181818182
+  Recall: 0.99
+  F1_score: 0.989990926504688
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 18 con seed: 1785764510
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9850470188075228
+  Recall: 0.985
+  F1_score: 0.984998874746818
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 19 con seed: 1785764640
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9762254901960784
+  Recall: 0.975
+  F1_score: 0.9750031250781268
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 20 con seed: 1785764767
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.98
+  Recall: 0.98
+  F1_score: 0.98
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 21 con seed: 1785764895
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9950531914893616
+  Recall: 0.995
+  F1_score: 0.9950016318947552
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 22 con seed: 1785765023
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.970218196376739
+  Recall: 0.97
+  F1_score: 0.9700120192307692
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 23 con seed: 1785765151
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 24 con seed: 1785765282
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.99
+  Recall: 0.99
+  F1_score: 0.99
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 25 con seed: 1785765410
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9750375939849624
+  Recall: 0.975
+  F1_score: 0.974994363586262
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 26 con seed: 1785765539
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.975052505250525
+  Recall: 0.975
+  F1_score: 0.9750018754219698
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 27 con seed: 1785765669
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9807843137254902
+  Recall: 0.98
+  F1_score: 0.98
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 28 con seed: 1785765848
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.99
+  Recall: 0.99
+  F1_score: 0.99
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 29 con seed: 1785766088
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9950520833333334
+  Recall: 0.995
+  F1_score: 0.9950011272827476
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
+
+============================================================
+RUN 30 con seed: 1785766262
+============================================================
+----- Test su dataset creato da noi -----
+Metriche globali:
+  Precision: 0.9802469885615952
+  Recall: 0.98
+  F1_score: 0.9800243506493508
+
+----- Test su dataset trovato -----
+Metriche globali:
+  Precision: 1.0
+  Recall: 1.0
+  F1_score: 1.0
