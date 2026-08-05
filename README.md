@@ -22,13 +22,22 @@ The LLM folder contains the Python files that allow training and testing of the 
 
 ```bash
 LLM/
-├── custom_libs_clinical_t5_base/
-│   ├── ClinicalT5_ModelTrainer.py
-│   ├── data_handler.py
-│   └── pii_data_loader.py
-├── testing_clinicalT5-base.py
-└── training_clinicalT5-base.py
+├── Benchmark/
+│   ├── custom_libs_clinical_t5_base/
+│   │   ├── ClinicalT5_ModelTrainer.py
+│   │   ├── data_handler.py
+│   │   └── pii_data_loader.py
+│   ├── testing_clinicalT5-base.py
+│   └── training_clinicalT5-base.py
+└── balanced_and_imbalanced_training/
+    ├── custom_libs_clinical_t5_base/
+    │   ├── ClinicalT5_ModelTrainer.py
+    │   ├── data_handler.py
+    │   └── pii_data_loader.py
+    ├── testing_clinicalT5-base.py
+    └── training_clinicalT5-base.py
 ```
+Benchmark folder contains scripts used for the benchmarks of the models, in particular for ClinicalT5, on a generated dataset. In 'balanced_and_imbalanced_training' there are the same scripts modified in order to train ClinicalT5 model on two dataset: by setting appropriately the METHODOLOGY variable, the training can be done by taking the 75% of the two dataset (imbalanced), or 750 samples from both dataset (imbalanced). 
 
 ### ClinicalT5_ModelTrainer.py
 Contains the training, testing, and inference methods for the ClinicalT5 model. In particular, it also includes the method for plotting the ROC curve during testing.
