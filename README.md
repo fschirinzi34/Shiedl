@@ -75,7 +75,7 @@ Script used to train the NER model.
 Script used to test the previously trained NER model in order to evaluate its performance on a new test dataset.
 
 ### NER_balanced_finetuning.ipynb
-Script for fine-tuning a spaCy NER model on a balanced medical dataset. Includes data preprocessing, training, evaluation, and performance comparison across multiple runs.
+Script for fine-tuning a spaCy NER model on a balanced medical dataset. The dataset is split into 1500 training samples and 500 test samples. Includes data preprocessing, model training, and performance evaluation.
 
 ### NER_imbalanced_finetuning.ipynb
-Notebook for fine-tuning a NER model on an imbalanced dataset. This dataset created by sampling 75% of two datasets with very different sizes: one containing approximately 50,000 texts and the other 1,000 texts, thus preserving the strong imbalance between the two sources.
+Script for fine-tuning a NER model on an imbalanced dataset. This dataset created by sampling 75% of two datasets with very different sizes: one containing approximately 50,000 texts and the other 1,000 texts, thus preserving the strong imbalance between the two sources.
